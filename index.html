@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Учебна SQL лаборатория за начинаещи — изпълнявайте SQL заявки в браузъра.">
+  <title>SQL лаборатория | ICT Labs</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script src="https://sql.js.org/dist/sql-wasm.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="ICT Labs SQL лаборатория">
+      <span class="brand-mark">SQL</span>
+      <span><strong>ICT Labs</strong><small>SQL лаборатория</small></span>
+    </a>
+    <div class="topbar-right">
+      <span class="status-dot" id="engineStatus"></span>
+      <span id="engineStatusText">Зареждане на SQL двигателя…</span>
+    </div>
+  </header>
+
+  <main class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-heading">
+        <span class="eyebrow">ПРАКТИКА</span>
+        <h2>Задания</h2>
+        <p>Избери задача, напиши заявката и провери резултата.</p>
+      </div>
+      <div id="sectionTabs" class="section-tabs" aria-label="Три учебни упражнения"></div>
+      <nav id="taskList" class="task-list" aria-label="Задания в избраното упражнение"></nav>
+      <div class="sidebar-note">
+        <span class="note-icon">ⓘ</span>
+        <p>Това е локална учебна база. Промените ти не засягат другите студенти.</p>
+      </div>
+    </aside>
+
+    <section class="workspace">
+      <div class="page-heading">
+        <div>
+          <div class="breadcrumb">SQL ЛАБОРАТОРИЯ <span>/</span> <span id="taskNumber">ЗАДАНИЕ 01</span></div>
+          <h1 id="taskTitle">SELECT — избор на колони</h1>
+          <p id="taskSubtitle">Основи на SQL заявките</p>
+        </div>
+        <span class="level-pill" id="taskLevel">НАЧАЛНО НИВО</span>
+      </div>
+
+      <section class="panel task-panel">
+        <div class="panel-title"><span class="step-number">1</span><h2>Условие на задачата</h2></div>
+        <p id="taskDescription" class="task-description"></p>
+        <div class="hint-row"><span>ЦЕЛ</span><span id="taskGoal"></span></div>
+      </section>
+
+      <div class="content-grid">
+        <section class="panel editor-panel">
+          <div class="panel-title editor-title">
+            <div class="title-with-step"><span class="step-number">2</span><h2>Твоята SQL заявка</h2></div>
+            <span class="editor-language">SQL</span>
+          </div>
+          <div class="editor-wrap">
+            <div class="line-numbers" id="lineNumbers">1</div>
+            <textarea id="sqlInput" spellcheck="false" autocapitalize="off" autocomplete="off"
+              autocorrect="off" aria-label="SQL редактор"
+              placeholder="Напиши SQL заявката си тук…"></textarea>
+          </div>
+          <div class="editor-footer">
+            <span>Съвет: можеш да изпълняваш заявката многократно.</span>
+            <button id="clearButton" class="button button-quiet" type="button">Изчисти</button>
+          </div>
+          <div class="button-row">
+            <button id="runButton" class="button button-primary" type="button" disabled>
+              <span>▶</span> Изпълни заявката
+            </button>
+            <button id="checkButton" class="button button-secondary" type="button" disabled>
+              Провери решението
+            </button>
+          </div>
+          <div id="feedback" class="feedback" role="status" aria-live="polite">
+            Зареждаме базата данни…
+          </div>
+        </section>
+
+        <aside class="panel schema-panel">
+          <div class="panel-title"><span class="step-number">3</span><h2>Структура на базата</h2></div>
+          <p class="muted">Таблици и колони, с които работиш в тази задача.</p>
+          <div id="schemaContent"></div>
+          <div class="schema-tip">
+            <strong>Какво означава това?</strong>
+            <p>Таблицата съдържа записи (редове) и колони (полета). SQL заявката избира какви данни да бъдат върнати.</p>
+          </div>
+        </aside>
+      </div>
+
+      <section class="panel results-panel">
+        <div class="results-heading">
+          <div class="panel-title"><span class="step-number">4</span><h2>Резултат от изпълнението</h2></div>
+          <span id="resultMeta" class="result-meta">Няма резултат</span>
+        </div>
+        <div id="results" class="results-area">
+          <div class="empty-state"><span class="empty-icon">▤</span><strong>Тук ще се появят резултатите</strong><span>Напиши SQL заявка и натисни „Изпълни заявката“.</span></div>
+        </div>
+      </section>
+
+      <footer class="workspace-footer">
+        <span>ICT Labs · Учебна среда за SQL</span>
+        <button id="resetDbButton" class="text-button" type="button">Възстанови началната база</button>
+      </footer>
+    </section>
+  </main>
+  <script src="./app.js"></script>
+</body>
+</html>
