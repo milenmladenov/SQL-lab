@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Теоретичен материал по SQL за студенти — основни команди, синтаксис и примери.">
+  <title>SQL теория | ICT Labs</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="./index.html" aria-label="ICT Labs SQL лаборатория">
+      <span class="brand-mark">SQL</span>
+      <span><strong>ICT Labs</strong><small>SQL лаборатория</small></span>
+    </a>
+    <nav class="topbar-nav" aria-label="Основна навигация">
+      <a class="topbar-link active" href="./theory.html">Теория</a>
+      <a class="topbar-link" href="./index.html">Практика</a>
+    </nav>
+    <div class="topbar-right"><span class="theory-label">УЧЕБЕН МАТЕРИАЛ</span></div>
+  </header>
+
+  <main class="theory-layout">
+    <aside class="theory-sidebar">
+      <div class="sidebar-heading">
+        <span class="eyebrow">SQL ОСНОВИ</span>
+        <h2>Съдържание</h2>
+        <p>Премини през темите последователно или избери конкретна команда.</p>
+      </div>
+      <nav class="theory-nav">
+        <a href="#intro">1. Въведение в SQL</a>
+        <a href="#select">2. SELECT</a>
+        <a href="#where">3. WHERE</a>
+        <a href="#update">4. UPDATE</a>
+        <a href="#delete">5. DELETE</a>
+        <a href="#order">6. ORDER BY и DISTINCT</a>
+        <a href="#join">7. JOIN</a>
+        <a href="#aggregate">8. Агрегатни функции</a>
+        <a href="#group">9. GROUP BY и HAVING</a>
+        <a href="#advanced">10. Подзаявки и CASE</a>
+        <a href="#workflow">11. Практически правила</a>
+      </nav>
+      <a class="theory-practice-link" href="./index.html">Отвори практическите задачи →</a>
+    </aside>
+
+    <article class="theory-content">
+      <div class="theory-hero">
+        <div class="breadcrumb">ICT LABS <span>/</span> ТЕОРИЯ</div>
+        <span class="theory-kicker">УЧЕБЕН МОДУЛ · БАЗИ ДАННИ</span>
+        <h1>SQL — език за работа с релационни бази данни</h1>
+        <p>Този материал представя основните SQL команди, тяхното предназначение и синтаксис. Примерите използват същата учебна база данни, която студентите ще използват в практическата лаборатория.</p>
+        <div class="theory-meta"><span>11 теми</span><span>Примери със Stoka, Klient и Porachka</span><span>Начално до напреднало ниво</span></div>
+      </div>
+
+      <section class="theory-section" id="intro">
+        <div class="theory-section-heading"><span>01</span><div><h2>Въведение в SQL</h2><p>Как общуваме с релационната база данни?</p></div></div>
+        <p><strong>SQL (Structured Query Language)</strong> е декларативен език за дефиниране, извличане и промяна на данни в релационни бази данни. Вместо да описваме стъпка по стъпка как да намерим даден запис, задаваме какъв резултат искаме да получим.</p>
+        <div class="theory-callout"><strong>Основна идея</strong><p>Данните се съхраняват в таблици. Таблицата се състои от колони (атрибути) и редове (записи). Връзките между таблиците се реализират чрез първични и външни ключове.</p></div>
+        <h3>Учебна база данни</h3>
+        <div class="theory-table-wrap"><table class="theory-table"><thead><tr><th>Таблица</th><th>Предназначение</th><th>Основни колони</th></tr></thead><tbody>
+          <tr><td><code>Stoka</code></td><td>Стоки в каталога</td><td>id, name, price, vid_id</td></tr>
+          <tr><td><code>VidStoka</code></td><td>Категории стоки</td><td>id, name</td></tr>
+          <tr><td><code>Klient</code></td><td>Клиенти</td><td>id, name</td></tr>
+          <tr><td><code>Porachka</code></td><td>Поръчки</td><td>id, klient_id, data</td></tr>
+          <tr><td><code>PorachkaStoka</code></td><td>Стоки в поръчките</td><td>porachka_id, stoka_id, kolichestvo</td></tr>
+        </tbody></table></div>
+        <p>Например <code>Stoka.vid_id</code> е външен ключ към <code>VidStoka.id</code>. Така всяка стока може да бъде свързана със своята категория.</p>
+        <h3>Основни групи SQL команди</h3>
+        <ul class="theory-list">
+          <li><strong>DQL — извличане на данни:</strong> <code>SELECT</code>.</li>
+          <li><strong>DML — манипулиране на данни:</strong> <code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code>.</li>
+          <li><strong>DDL — дефиниране на структура:</strong> <code>CREATE</code>, <code>ALTER</code>, <code>DROP</code>.</li>
+        </ul>
+      </section>
+
+      <section class="theory-section" id="select">
+        <div class="theory-section-heading"><span>02</span><div><h2>SELECT — извличане на данни</h2><p>Избираме кои колони и записи да бъдат показани.</p></div></div>
+        <p>Командата <code>SELECT</code> извлича данни от една или повече таблици, без да променя съхранената информация.</p>
+        <h3>Основен синтаксис</h3>
+        <pre class="sql-example"><code>SELECT column1, column2
+FROM table_name;</code></pre>
+        <h3>Примери</h3>
+        <div class="example-block"><div class="example-caption">Извеждане на една колона</div><pre class="sql-example"><code>SELECT name
+FROM Stoka;</code></pre><p>Връща имената на всички стоки.</p></div>
+        <div class="example-block"><div class="example-caption">Извеждане на няколко колони</div><pre class="sql-example"><code>SELECT name, price
+FROM Stoka;</code></pre><p>Връща името и цената на всяка стока.</p></div>
+        <div class="example-block"><div class="example-caption">Извеждане на всички колони</div><pre class="sql-example"><code>SELECT *
+FROM Stoka;</code></pre><p>Звездичката <code>*</code> означава всички колони. В реални приложения е по-добре да се посочват конкретните колони, когато са известни.</p></div>
+        <div class="example-block"><div class="example-caption">Псевдоним и изчисление</div><pre class="sql-example"><code>SELECT name,
+       price * 1.20 AS price_with_vat
+FROM Stoka;</code></pre><p><code>AS</code> задава псевдоним на колона. Изразите могат да извършват аритметични операции.</p></div>
+        <div class="theory-tip"><strong>Важно:</strong> SQL не гарантира реда на резултатите, ако не използваме <code>ORDER BY</code>.</div>
+      </section>
+
+      <section class="theory-section" id="where">
+        <div class="theory-section-heading"><span>03</span><div><h2>WHERE — филтриране на записи</h2><p>Ограничаваме резултата според зададено условие.</p></div></div>
+        <p>Клаузата <code>WHERE</code> определя кои редове да участват в резултата. Условието се проверява за всеки запис.</p>
+        <pre class="sql-example"><code>SELECT name, price
+FROM Stoka
+WHERE price > 40;</code></pre>
+        <h3>Оператори за сравнение</h3>
+        <div class="theory-table-wrap"><table class="theory-table"><thead><tr><th>Оператор</th><th>Значение</th><th>Пример</th></tr></thead><tbody>
+          <tr><td><code>=</code></td><td>равно</td><td><code>price = 25</code></td></tr>
+          <tr><td><code>&lt;&gt;</code> или <code>!=</code></td><td>различно</td><td><code>price &lt;&gt; 25</code></td></tr>
+          <tr><td><code>&gt;</code>, <code>&lt;</code></td><td>по-голямо, по-малко</td><td><code>price &gt; 40</code></td></tr>
+          <tr><td><code>&gt;=</code>, <code>&lt;=</code></td><td>по-голямо/равно, по-малко/равно</td><td><code>price &lt;= 100</code></td></tr>
+        </tbody></table></div>
+        <h3>Логически оператори и специални условия</h3>
+        <pre class="sql-example"><code>-- Две условия трябва да са изпълнени
+SELECT name, price
+FROM Stoka
+WHERE price >= 20 AND price <= 50;
+
+-- Едно от условията трябва да е изпълнено
+SELECT name
+FROM Stoka
+WHERE price < 30 OR price > 300;
+
+-- Диапазон от стойности
+SELECT name
+FROM Stoka
+WHERE price BETWEEN 20 AND 100;
+
+-- Списък от възможни стойности
+SELECT name
+FROM Stoka
+WHERE vid_id IN (1, 2);
+
+-- Търсене по шаблон: започва с М
+SELECT name
+FROM Stoka
+WHERE name LIKE 'М%';</code></pre>
+        <p>При <code>LIKE</code> символът <code>%</code> замества произволен брой символи, а <code>_</code> замества точно един символ.</p>
+        <div class="theory-tip"><strong>Често срещана грешка:</strong> текстовите стойности се ограждат с единични кавички, например <code>name = 'Мишка'</code>. Числовите стойности обикновено се записват без кавички.</div>
+      </section>
+
+      <section class="theory-section" id="update">
+        <div class="theory-section-heading"><span>04</span><div><h2>UPDATE — промяна на съществуващи данни</h2><p>Актуализиране на стойности в един или повече записи.</p></div></div>
+        <p>Командата <code>UPDATE</code> променя стойностите на избрани колони в съществуващи редове. Клаузата <code>WHERE</code> определя кои записи ще бъдат засегнати.</p>
+        <pre class="sql-example"><code>UPDATE table_name
+SET column1 = value1,
+    column2 = value2
+WHERE condition;</code></pre>
+        <h3>Пример: промяна на цената на една стока</h3>
+        <pre class="sql-example"><code>UPDATE Stoka
+SET price = 50
+WHERE id = 1;
+
+-- Проверка на промяната
+SELECT id, name, price
+FROM Stoka
+WHERE id = 1;</code></pre>
+        <h3>Пример: увеличение на цените с 10%</h3>
+        <pre class="sql-example"><code>UPDATE Stoka
+SET price = price * 1.10
+WHERE vid_id = 2;
+
+-- Проверка на засегнатите записи
+SELECT id, name, price
+FROM Stoka
+WHERE vid_id = 2;</code></pre>
+        <div class="theory-warning"><strong>Внимание:</strong> ако пропуснем <code>WHERE</code>, командата ще промени стойността за всички редове в таблицата. Преди изпълнение на UPDATE е добра практика първо да проверим условието със SELECT.</div>
+        <pre class="sql-example"><code>-- Първо виж кои редове ще бъдат променени
+SELECT *
+FROM Stoka
+WHERE id = 1;</code></pre>
+      </section>
+
+      <section class="theory-section" id="delete">
+        <div class="theory-section-heading"><span>05</span><div><h2>DELETE — изтриване на записи</h2><p>Премахване на редове от таблица.</p></div></div>
+        <p>Командата <code>DELETE</code> изтрива редове от таблица. Тя не премахва самата таблица или нейната структура.</p>
+        <pre class="sql-example"><code>DELETE FROM table_name
+WHERE condition;</code></pre>
+        <h3>Пример: изтриване на една стока</h3>
+        <pre class="sql-example"><code>DELETE FROM Stoka
+WHERE id = 4;
+
+-- Проверка: записът вече не трябва да присъства
+SELECT id, name, price
+FROM Stoka
+ORDER BY id;</code></pre>
+        <h3>Пример: изтриване по условие</h3>
+        <pre class="sql-example"><code>DELETE FROM Stoka
+WHERE price < 20;
+
+-- Проверка на останалите записи
+SELECT id, name, price
+FROM Stoka
+ORDER BY id;</code></pre>
+        <div class="theory-warning"><strong>Внимание:</strong> <code>DELETE FROM Stoka;</code> без <code>WHERE</code> изтрива всички редове от таблицата. Проверявайте предварително кои записи ще бъдат засегнати чрез съответния SELECT.</div>
+        <h3>UPDATE срещу DELETE</h3>
+        <div class="theory-table-wrap"><table class="theory-table"><thead><tr><th>Команда</th><th>Действие</th><th>Структурата на таблицата</th></tr></thead><tbody>
+          <tr><td><code>UPDATE</code></td><td>Променя стойности в съществуващи редове</td><td>Запазва се</td></tr>
+          <tr><td><code>DELETE</code></td><td>Премахва избрани редове</td><td>Запазва се</td></tr>
+          <tr><td><code>DROP TABLE</code></td><td>Премахва таблицата</td><td>Не се запазва</td></tr>
+        </tbody></table></div>
+      </section>
+
+      <section class="theory-section" id="order">
+        <div class="theory-section-heading"><span>06</span><div><h2>ORDER BY и DISTINCT</h2><p>Подреждане и премахване на дублиращи се резултати.</p></div></div>
+        <h3>ORDER BY</h3>
+        <p><code>ORDER BY</code> подрежда резултатните редове по една или повече колони.</p>
+        <pre class="sql-example"><code>-- Възходящ ред (ASC е по подразбиране)
+SELECT name, price
+FROM Stoka
+ORDER BY price ASC;
+
+-- Низходящ ред
+SELECT name, price
+FROM Stoka
+ORDER BY price DESC;
+
+-- Два критерия
+SELECT name, vid_id, price
+FROM Stoka
+ORDER BY vid_id ASC, price DESC;</code></pre>
+        <p><code>ASC</code> означава възходящ ред, а <code>DESC</code> — низходящ. При няколко критерия първо се прилага първата колона, а след това следващата за равните стойности.</p>
+        <h3>DISTINCT</h3>
+        <p><code>DISTINCT</code> премахва повторенията в резултата. Уникалността се определя за цялата комбинация от избрани колони.</p>
+        <pre class="sql-example"><code>-- Уникални категории
+SELECT DISTINCT vid_id
+FROM Stoka;
+
+-- Уникални комбинации категория и цена
+SELECT DISTINCT vid_id, price
+FROM Stoka;</code></pre>
+      </section>
+
+      <section class="theory-section" id="join">
+        <div class="theory-section-heading"><span>07</span><div><h2>JOIN — свързване на таблици</h2><p>Извличане на свързани данни от повече от една таблица.</p></div></div>
+        <p>В релационните бази данни информацията често е разделена между няколко таблици. Чрез <code>JOIN</code> комбинираме редове, които имат свързани стойности в ключовите колони.</p>
+        <h3>INNER JOIN</h3>
+        <p>Връща само редовете, за които има съвпадение и в двете таблици.</p>
+        <pre class="sql-example"><code>SELECT Stoka.name, VidStoka.name AS vid
+FROM Stoka
+INNER JOIN VidStoka
+  ON Stoka.vid_id = VidStoka.id;</code></pre>
+        <h3>LEFT JOIN</h3>
+        <p>Връща всички редове от лявата таблица и съвпадащите от дясната. Когато няма съвпадение, колоните от дясната таблица съдържат <code>NULL</code>.</p>
+        <pre class="sql-example"><code>SELECT Klient.name, Porachka.id AS porachka_id
+FROM Klient
+LEFT JOIN Porachka
+  ON Klient.id = Porachka.klient_id;</code></pre>
+        <div class="theory-tip"><strong>Ключов момент:</strong> условието след <code>ON</code> описва как се свързват таблиците. То не е същото като <code>WHERE</code>, което филтрира получения резултат.</div>
+      </section>
+
+      <section class="theory-section" id="aggregate">
+        <div class="theory-section-heading"><span>08</span><div><h2>Агрегатни функции</h2><p>Изчисляване на обобщени стойности.</p></div></div>
+        <p>Агрегатните функции обработват множество редове и връщат една обобщена стойност.</p>
+        <div class="theory-table-wrap"><table class="theory-table"><thead><tr><th>Функция</th><th>Предназначение</th></tr></thead><tbody>
+          <tr><td><code>COUNT()</code></td><td>Брои редове или ненулеви стойности.</td></tr>
+          <tr><td><code>SUM()</code></td><td>Изчислява сума.</td></tr>
+          <tr><td><code>AVG()</code></td><td>Изчислява средна аритметична стойност.</td></tr>
+          <tr><td><code>MIN()</code></td><td>Намира минимална стойност.</td></tr>
+          <tr><td><code>MAX()</code></td><td>Намира максимална стойност.</td></tr>
+        </tbody></table></div>
+        <pre class="sql-example"><code>-- Брой на всички стоки
+SELECT COUNT(*) AS broi
+FROM Stoka;
+
+-- Обща стойност на цените
+SELECT SUM(price) AS total_price
+FROM Stoka;
+
+-- Средна, минимална и максимална цена
+SELECT AVG(price) AS avg_price,
+       MIN(price) AS min_price,
+       MAX(price) AS max_price
+FROM Stoka;</code></pre>
+        <p><code>COUNT(*)</code> брои редовете. <code>COUNT(column)</code> брои само стойностите, които не са <code>NULL</code>.</p>
+      </section>
+
+      <section class="theory-section" id="group">
+        <div class="theory-section-heading"><span>09</span><div><h2>GROUP BY и HAVING</h2><p>Групиране и филтриране на обобщени резултати.</p></div></div>
+        <p><code>GROUP BY</code> обединява редовете с еднаква стойност в посочените колони. След това агрегатните функции могат да изчисляват стойности за всяка група.</p>
+        <pre class="sql-example"><code>-- Брой стоки във всеки вид
+SELECT vid_id, COUNT(*) AS broi
+FROM Stoka
+GROUP BY vid_id;
+
+-- Средна цена по вид
+SELECT vid_id, AVG(price) AS avg_price
+FROM Stoka
+GROUP BY vid_id;</code></pre>
+        <h3>WHERE срещу HAVING</h3>
+        <ul class="theory-list">
+          <li><code>WHERE</code> филтрира отделните редове преди групирането.</li>
+          <li><code>HAVING</code> филтрира групите след групирането.</li>
+        </ul>
+        <pre class="sql-example"><code>-- Показва само видовете с повече от една стока
+SELECT vid_id, COUNT(*) AS broi
+FROM Stoka
+GROUP BY vid_id
+HAVING COUNT(*) > 1;</code></pre>
+        <div class="theory-tip"><strong>Запомни:</strong> условие върху обикновена колона обикновено се поставя в <code>WHERE</code>, а условие върху резултат от агрегатна функция — в <code>HAVING</code>.</div>
+      </section>
+
+      <section class="theory-section" id="advanced">
+        <div class="theory-section-heading"><span>10</span><div><h2>Подзаявки и CASE</h2><p>По-сложни условия и изчисляване на категории.</p></div></div>
+        <h3>Подзаявки (Subqueries)</h3>
+        <p>Подзаявката е SQL заявка, вложена в друга заявка. Резултатът ѝ се използва от външната заявка.</p>
+        <pre class="sql-example"><code>-- Стоки с цена над средната цена
+SELECT name, price
+FROM Stoka
+WHERE price > (
+  SELECT AVG(price)
+  FROM Stoka
+);</code></pre>
+        <h3>CASE</h3>
+        <p><code>CASE</code> реализира условна логика в рамките на SQL заявка. Връща различна стойност според това кое условие е изпълнено.</p>
+        <pre class="sql-example"><code>SELECT name,
+       CASE
+         WHEN price > 100 THEN 'Скъпа'
+         ELSE 'Достъпна'
+       END AS category_price
+FROM Stoka;</code></pre>
+      </section>
+
+      <section class="theory-section" id="workflow">
+        <div class="theory-section-heading"><span>11</span><div><h2>Практически правила и често срещани грешки</h2><p>Как да пишем по-надеждни SQL заявки.</p></div></div>
+        <ol class="theory-steps">
+          <li><strong>Първо разбери условието.</strong> Определи кои колони трябва да се покажат и кои записи трябва да бъдат засегнати.</li>
+          <li><strong>Провери структурата.</strong> Увери се, че използваш правилните имена на таблици и колони.</li>
+          <li><strong>При UPDATE и DELETE първо пусни SELECT.</strong> Използвай същото условие в WHERE, за да видиш кои редове ще бъдат променени или изтрити.</li>
+          <li><strong>Проверявай резултата.</strong> След промяна на данните изпълни SELECT, за да потвърдиш ефекта.</li>
+          <li><strong>Използвай ясни имена и псевдоними.</strong> Това прави заявките по-лесни за четене.</li>
+        </ol>
+        <h3>Чести грешки</h3>
+        <ul class="theory-list">
+          <li>Липсваща или неправилна клауза <code>WHERE</code>.</li>
+          <li>Грешно име на колона или таблица.</li>
+          <li>Използване на <code>= NULL</code> вместо <code>IS NULL</code>.</li>
+          <li>Липсващо условие за свързване след <code>JOIN</code>.</li>
+          <li>Използване на агрегатна функция в <code>WHERE</code> вместо <code>HAVING</code>.</li>
+          <li>Очакване на определен ред на резултатите без <code>ORDER BY</code>.</li>
+        </ul>
+        <pre class="sql-example"><code>-- Проверка за липсваща стойност
+SELECT *
+FROM Porachka
+WHERE data IS NULL;</code></pre>
+      </section>
+
+      <div class="theory-end">
+        <h2>Готови ли сте за практика?</h2>
+        <p>Използвайте наученото, за да напишете заявките самостоятелно. След всяка задача можете да изпълните SQL и да проверите резултата.</p>
+        <a class="theory-cta" href="./index.html">Към практическите задачи →</a>
+      </div>
+      <footer class="workspace-footer"><span>ICT Labs · Теоретична част по SQL</span><a href="./index.html">Към SQL лабораторията</a></footer>
+    </article>
+  </main>
+</body>
+</html>

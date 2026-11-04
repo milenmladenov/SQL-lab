@@ -22,6 +22,55 @@ const TASKS = [
     description: "Изведете името и цената на стоките, които струват под 30 или над 300.", goal: "Колони name и price за двете групи стоки.", tables: ["Stoka"],
     expectedColumns: ["name","price"], expectedRows: [["Мишка",25],["Монитор",320]] },
 
+
+  { id: 23, section: "basics", topic: "SELECT", title: "SELECT 4 — всички колони", subtitle: "Използване на звездичка", level: "НАЧАЛНО НИВО", short: "SELECT · 4",
+    description: "Изведете всички колони и всички записи от таблицата Stoka. Използвайте съкратения запис за избор на всички колони.",
+    goal: "Всички колони от Stoka: id, name, price и vid_id.", tables: ["Stoka"], expectedColumns: ["id","name","price","vid_id"],
+    expectedRows: [[1,"Клавиатура",45,1],[2,"Мишка",25,1],[3,"Монитор",320,1],[4,"USB кабел",12,2]] },
+  { id: 24, section: "basics", topic: "SELECT", title: "SELECT 5 — изчисляване на стойност", subtitle: "Аритметичен израз в SELECT", level: "СРЕДНО НИВО", short: "SELECT · 5",
+    description: "Изведете името на всяка стока и нейната цена с включен 20% ДДС. Наименувайте изчислената колона price_vat. Закръглете до два знака след десетичната запетая.",
+    goal: "Колони name и price_vat.", tables: ["Stoka"], expectedColumns: ["name","price_vat"],
+    expectedRows: [["Клавиатура",54],["Мишка",30],["Монитор",384],["USB кабел",14.4]] },
+  { id: 25, section: "basics", topic: "SELECT", title: "SELECT 6 — обединяване на текст", subtitle: "Конкатенация на колони", level: "СРЕДНО НИВО", short: "SELECT · 6",
+    description: "Изведете една колона product_info, която съдържа името на стоката, тире и цената ѝ, например „Мишка - 25“. Използвайте оператора ||.",
+    goal: "Една колона product_info с име и цена.", tables: ["Stoka"], expectedColumns: ["product_info"],
+    expectedRows: [["Клавиатура - 45"],["Мишка - 25"],["Монитор - 320"],["USB кабел - 12"]] },
+  { id: 26, section: "basics", topic: "WHERE", title: "WHERE 4 — списък от стойности", subtitle: "Оператор IN", level: "СРЕДНО НИВО", short: "WHERE · 4",
+    description: "Изведете имената на стоките, чийто vid_id е 1 или 2. Използвайте оператора IN.",
+    goal: "Имената на всички стоки от видове 1 и 2.", tables: ["Stoka"], expectedColumns: ["name"],
+    expectedRows: [["Клавиатура"],["Мишка"],["Монитор"],["USB кабел"]] },
+  { id: 27, section: "basics", topic: "WHERE", title: "WHERE 5 — търсене по шаблон", subtitle: "Оператор LIKE", level: "СРЕДНО НИВО", short: "WHERE · 5",
+    description: "Изведете имената на стоките, чието име започва с буквата „М“. Използвайте LIKE и символа %.",
+    goal: "Имената Мишка и Монитор.", tables: ["Stoka"], expectedColumns: ["name"],
+    expectedRows: [["Мишка"],["Монитор"]] },
+  { id: 28, section: "basics", topic: "WHERE", title: "WHERE 6 — две едновременни условия", subtitle: "Комбиниране с AND", level: "СРЕДНО НИВО", short: "WHERE · 6",
+    description: "Изведете името и цената на стоките, чиято цена е поне 20 и най-много 50. Използвайте две условия, свързани с AND.",
+    goal: "Стоките с цена в интервала от 20 до 50 включително.", tables: ["Stoka"], expectedColumns: ["name","price"],
+    expectedRows: [["Клавиатура",45],["Мишка",25]] },
+
+
+  // УПРАЖНЕНИЕ 1 — UPDATE и DELETE: промяна на данни с проверка чрез SELECT
+  { id: 29, section: "basics", topic: "UPDATE", command: "UPDATE", title: "UPDATE 1 — промяна на цена", subtitle: "Актуализиране на конкретен запис", level: "СРЕДНО НИВО", short: "UPDATE · 1",
+    description: "Променете цената на стоката „Клавиатура“ на 50. Използвайте UPDATE и WHERE, така че да бъде променен само този запис.",
+    goal: "След изпълнение автоматично ще се покаже SELECT резултатът за клавиатурата. Той трябва да съдържа id = 1, name = Клавиатура и price = 50.",
+    tables: ["Stoka"], verifySql: "SELECT id, name, price FROM Stoka WHERE id = 1;",
+    expectedColumns: ["id","name","price"], expectedRows: [[1,"Клавиатура",50]] },
+  { id: 30, section: "basics", topic: "UPDATE", command: "UPDATE", title: "UPDATE 2 — промяна на няколко записа", subtitle: "UPDATE с условие", level: "СРЕДНО НИВО", short: "UPDATE · 2",
+    description: "Увеличете с 10% цената на всички стоки от вид с vid_id = 2. Използвайте UPDATE и WHERE.",
+    goal: "След изпълнение автоматично ще се покаже SELECT резултатът за стоките от вид 2. USB кабелът трябва да е с цена 13.2.",
+    tables: ["Stoka"], verifySql: "SELECT id, name, price FROM Stoka WHERE vid_id = 2;",
+    expectedColumns: ["id","name","price"], expectedRows: [[4,"USB кабел",13.2]] },
+  { id: 31, section: "basics", topic: "DELETE", command: "DELETE", title: "DELETE 1 — изтриване на конкретен запис", subtitle: "Изтриване с WHERE", level: "СРЕДНО НИВО", short: "DELETE · 1",
+    description: "Изтрийте стоката „USB кабел“ от таблицата Stoka. Използвайте DELETE и WHERE по id. Не изтривайте останалите стоки.",
+    goal: "След изпълнение автоматично ще се покаже цялата таблица Stoka. В нея трябва да останат три записа.",
+    tables: ["Stoka"], verifySql: "SELECT id, name, price FROM Stoka ORDER BY id;",
+    expectedColumns: ["id","name","price"], expectedRows: [[1,"Клавиатура",45],[2,"Мишка",25],[3,"Монитор",320]], ordered: true },
+  { id: 32, section: "basics", topic: "DELETE", command: "DELETE", title: "DELETE 2 — изтриване по условие", subtitle: "DELETE с оператор <", level: "СРЕДНО НИВО", short: "DELETE · 2",
+    description: "Изтрийте всички стоки с цена под 20. Използвайте DELETE и WHERE. Внимавайте условието да не засегне останалите записи.",
+    goal: "След изпълнение автоматично ще се покаже SELECT резултатът за всички останали стоки. Трябва да останат три записа.",
+    tables: ["Stoka"], verifySql: "SELECT id, name, price FROM Stoka ORDER BY id;",
+    expectedColumns: ["id","name","price"], expectedRows: [[1,"Клавиатура",45],[2,"Мишка",25],[3,"Монитор",320]], ordered: true },
+
   // УПРАЖНЕНИЕ 2 — ORDER BY, DISTINCT и JOIN
   { id: 7, section: "filters", topic: "ORDER BY", title: "ORDER BY 1 — възходящ ред", subtitle: "Сортиране по цена", level: "НАЧАЛНО НИВО", short: "ORDER BY · 1",
     description: "Изведете name и price за всички стоки, подредени по цена от най-ниската към най-високата.", goal: "Сортиране по price във възходящ ред.", tables: ["Stoka"],
@@ -85,7 +134,7 @@ const completed = new Set((() => {
   catch { return []; }
 })());
 const SECTIONS = [
-  { id: "basics", title: "Упражнение 1", subtitle: "SELECT и WHERE · 6 задачи" },
+  { id: "basics", title: "Упражнение 1", subtitle: "SELECT, WHERE, UPDATE и DELETE · 16 задачи" },
   { id: "filters", title: "Упражнение 2", subtitle: "ORDER BY, DISTINCT и JOIN · 8 задачи" },
   { id: "advanced", title: "Упражнение 3", subtitle: "GROUP BY и комплексни заявки · 8 задачи" }
 ];
@@ -346,20 +395,45 @@ function runQuery() {
     setFeedback("Първо напиши SQL заявка.", "error");
     return;
   }
-  // Browser-side teaching restriction: one statement, SELECT/WITH only.
-  // This is not a security boundary; use a separate grading database in production.
+  // Една команда на изпълнение. DML е разрешен само в съответните задачи.
   const withoutTrailingSemicolon = sql.replace(/;\s*$/, "");
   if (withoutTrailingSemicolon.includes(";")) {
-    setFeedback("Въведи една SQL заявка наведнъж.", "error");
+    setFeedback("Въведи една SQL команда наведнъж.", "error");
     return;
   }
-  if (!/^(SELECT|WITH)\b/i.test(sql)) {
-    setFeedback("В тази лаборатория засега са разрешени само SELECT заявки.", "error");
+  const task = TASKS.find(item => item.id === currentTaskId);
+  const command = (sql.match(/^\s*(SELECT|WITH|UPDATE|DELETE)\b/i) || [])[1]?.toUpperCase();
+  if (task.command) {
+    if (command !== task.command) {
+      setFeedback(`За тази задача трябва да използваш команда ${task.command}.`, "error");
+      return;
+    }
+  } else if (!["SELECT", "WITH"].includes(command)) {
+    setFeedback("За тази задача са разрешени само SELECT заявки.", "error");
     return;
   }
 
   try {
+    // Всяка DML задача започва от началното състояние, за да може да се изпълнява многократно.
+    if (task.command) {
+      if (db) db.close();
+      db = createDatabase(SQL_ENGINE);
+    }
     const output = db.exec(sql);
+    if (task.command) {
+      const verification = db.exec(task.verifySql);
+      if (!verification.length) {
+        setFeedback("Командата се изпълни, но проверяващият SELECT не върна резултат.", "error");
+        return;
+      }
+      const result = verification[0];
+      renderResults(result.columns, result.values);
+      $("resultMeta").textContent = `Проверка чрез SELECT · ${result.values.length} реда · ${result.columns.length} колони`;
+      lastRun = verification;
+      $("checkButton").disabled = false;
+      setFeedback("Командата се изпълни. Резултатът от SELECT проверката е показан по-долу. Провери решението си.", "success");
+      return;
+    }
     if (output.length === 0) {
       setFeedback("Заявката се изпълни, но не върна табличен резултат.", "error");
       return;

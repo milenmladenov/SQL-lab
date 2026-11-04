@@ -142,3 +142,81 @@ button { cursor: pointer; }
   .editor-panel, .schema-panel, .results-panel { padding: 14px; }
   .workspace-footer { align-items: flex-start; flex-direction: column; }
 }
+
+
+/* Theory navigation and teaching material */
+.topbar-nav { display:flex; align-items:center; gap:7px; margin-left:auto; margin-right:22px; }
+.topbar-link { text-decoration:none; color:#667085; padding:9px 13px; border-radius:8px; font-size:12px; font-weight:700; }
+.topbar-link:hover { background:#f5f7fb; color:#2448d8; }
+.topbar-link.active { background:#eef2ff; color:#2448d8; }
+.theory-label { font-size:10px; font-weight:700; letter-spacing:1px; color:#7b8497; }
+.theory-layout { max-width:1500px; margin:0 auto; display:grid; grid-template-columns:260px minmax(0,1fr); align-items:start; }
+.theory-sidebar { position:sticky; top:0; height:calc(100vh - 70px); overflow:auto; background:#fff; border-right:1px solid var(--line); padding:28px 17px 20px; display:flex; flex-direction:column; }
+.theory-sidebar .sidebar-heading { padding:0 9px 15px; }
+.theory-nav { display:grid; gap:4px; }
+.theory-nav a { color:#526079; text-decoration:none; padding:9px 10px; border-radius:7px; font-size:11px; line-height:1.4; }
+.theory-nav a:hover { color:#2448d8; background:#eef2ff; }
+.theory-practice-link { margin:18px 8px 0; color:#315efb; text-decoration:none; font-size:11px; font-weight:700; line-height:1.5; }
+.theory-content { min-width:0; max-width:1040px; width:100%; padding:34px clamp(18px,4vw,58px) 50px; }
+.theory-hero { padding:32px 34px; border:1px solid #e2e8fb; border-radius:16px; background:linear-gradient(135deg,#fff 0%,#f3f6ff 100%); margin-bottom:24px; }
+.theory-kicker { display:inline-block; margin-top:20px; color:#315efb; font-size:10px; font-weight:700; letter-spacing:1.2px; }
+.theory-hero h1 { font-size:clamp(26px,3vw,38px); line-height:1.15; letter-spacing:-1.2px; margin:12px 0; max-width:760px; }
+.theory-hero p { color:#596579; font-size:14px; line-height:1.8; max-width:790px; margin:0; }
+.theory-meta { display:flex; flex-wrap:wrap; gap:8px; margin-top:20px; }
+.theory-meta span { background:#fff; border:1px solid #e2e8f0; color:#667085; padding:7px 10px; border-radius:6px; font-size:10px; }
+.theory-section { scroll-margin-top:20px; background:#fff; border:1px solid var(--line); border-radius:13px; box-shadow:var(--shadow); padding:25px 28px; margin-bottom:17px; }
+.theory-section-heading { display:flex; align-items:flex-start; gap:14px; margin-bottom:19px; }
+.theory-section-heading > span { flex:0 0 38px; width:38px; height:38px; display:grid; place-items:center; border-radius:10px; background:#eef2ff; color:#315efb; font:600 12px 'IBM Plex Mono',monospace; }
+.theory-section-heading h2 { margin:1px 0 4px; font-size:20px; letter-spacing:-.5px; }
+.theory-section-heading p { margin:0; color:#7a8497; font-size:11px; }
+.theory-section > p { color:#475467; line-height:1.85; font-size:13px; margin:12px 0; }
+.theory-section h3 { font-size:14px; margin:22px 0 10px; }
+.theory-section code { font-family:'IBM Plex Mono',monospace; font-size:.92em; color:#2448d8; background:#f2f4f9; border-radius:4px; padding:2px 4px; }
+.sql-example { margin:10px 0 12px; padding:16px 18px; background:#111827; color:#e5edff; border:1px solid #263348; border-radius:9px; overflow:auto; font:12px/1.8 'IBM Plex Mono',monospace; white-space:pre; }
+.sql-example code { color:inherit; background:transparent; padding:0; font:inherit; }
+.example-block { margin:15px 0; }
+.example-caption { font-size:11px; color:#344054; font-weight:700; margin:0 0 5px; }
+.example-block p { color:#667085; font-size:11px; line-height:1.6; margin:6px 0; }
+.theory-callout,.theory-tip,.theory-warning { margin:17px 0; border-radius:0 8px 8px 0; padding:13px 15px; border-left:3px solid #9bb0ff; background:#f4f6ff; }
+.theory-callout strong,.theory-tip strong,.theory-warning strong { font-size:11px; }
+.theory-callout p { margin:5px 0 0; color:#596579; font-size:12px; line-height:1.7; }
+.theory-tip { border-left-color:#12a76b; background:#effaf4; color:#236344; font-size:12px; line-height:1.7; }
+.theory-warning { border-left-color:#e0a12b; background:#fff8e8; color:#805b13; font-size:12px; line-height:1.7; }
+.theory-table-wrap { width:100%; overflow-x:auto; margin:13px 0; }
+.theory-table { width:100%; border-collapse:collapse; font-size:11px; text-align:left; }
+.theory-table th { background:#f7f8fb; color:#475467; font-size:10px; text-transform:uppercase; letter-spacing:.4px; }
+.theory-table th,.theory-table td { padding:10px 12px; border:1px solid #e8ebf2; vertical-align:top; }
+.theory-table td { color:#526079; line-height:1.6; }
+.theory-list,.theory-steps { color:#475467; font-size:12px; line-height:1.8; padding-left:21px; }
+.theory-list li,.theory-steps li { margin:6px 0; }
+.theory-steps { display:grid; gap:6px; }
+.theory-end { margin:20px 0; padding:26px 28px; background:#172033; border-radius:13px; color:#fff; }
+.theory-end h2 { margin:0 0 8px; font-size:20px; }
+.theory-end p { color:#c7cfdd; font-size:12px; line-height:1.7; max-width:650px; }
+.theory-cta { display:inline-block; margin-top:8px; padding:11px 15px; border-radius:8px; background:#fff; color:#2448d8; text-decoration:none; font-size:12px; font-weight:700; }
+.theory-content .workspace-footer { padding:15px 0; }
+.theory-content .workspace-footer a { color:#667085; text-decoration:none; font-size:11px; }
+@media (max-width:900px) {
+  .theory-layout { grid-template-columns:210px minmax(0,1fr); }
+  .theory-sidebar { padding-left:12px; padding-right:12px; }
+  .theory-section { padding:21px; }
+}
+@media (max-width:650px) {
+  .topbar { padding:0 14px; }
+  .topbar-nav { margin-right:8px; gap:1px; }
+  .topbar-link { padding:8px 9px; font-size:11px; }
+  .topbar-right { display:none; }
+  .theory-layout { display:block; }
+  .theory-sidebar { position:static; height:auto; border-right:0; border-bottom:1px solid var(--line); padding:15px; }
+  .theory-sidebar .sidebar-heading { padding-bottom:10px; }
+  .theory-sidebar .sidebar-heading h2 { font-size:16px; }
+  .theory-sidebar .sidebar-heading p { font-size:11px; }
+  .theory-nav { display:flex; overflow-x:auto; gap:6px; padding-bottom:5px; }
+  .theory-nav a { white-space:nowrap; border:1px solid #e6eaf2; }
+  .theory-practice-link { margin:10px 5px 0; }
+  .theory-content { padding:18px 13px 30px; }
+  .theory-hero { padding:23px 20px; }
+  .theory-section { padding:19px 17px; }
+  .theory-section-heading h2 { font-size:17px; }
+  .theory-section-heading p { line-height:1.5; }
+}
